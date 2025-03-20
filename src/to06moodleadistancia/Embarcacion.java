@@ -8,7 +8,7 @@ public abstract class Embarcacion implements Navegable { //Al ser abstracta no p
   //Atributos estáticos variables de clase
   public static int numBarcosCreados;
   public static int numBarcosNavegando;
-  public static int tiempoTotalFlota;
+  public static float tiempoTotalFlota;
 
   //Atributos estáticos inmutables de clase (nombres y valores ya proporcionados explicitamente pq ya se hará uso de ellos)
   public static final String PATRON_POR_DEFECTO = "Sin patrón";
@@ -42,7 +42,62 @@ public abstract class Embarcacion implements Navegable { //Al ser abstracta no p
     this.patron = Embarcacion.PATRON_POR_DEFECTO;
     this.rumbo = Embarcacion.RUMBO_POR_DEFECTO;
     this.tiempoTotalNavegacionBarco = 0;
-
   }
 
+  //Getters
+  public String getNombreBarco() {
+    return this.nombreBarco;
+  }
+
+  public int getMaxTripulantes() {
+    return this.MAX_TRIPULANTES;
+  }
+
+  public boolean isNavegando() {
+    return this.navegando;
+  }
+
+  public int getVelocidad() {
+    return this.velocidad;
+  }
+
+  public String getRumbo() {
+    return this.rumbo;
+  }
+
+  public String getPatron() {
+    return this.patron;
+  }
+
+  public int getTripulacion() {
+    return this.MAX_TRIPULANTES;
+  }
+
+  public int getTiempoTotalNavegacionBarco() {
+    return this.tiempoTotalNavegacionBarco;
+  }
+
+  //Métodos que devuelven información genérica o global sobre la clase (estáticos)
+  public int getNumBarcos() {
+    return Embarcacion.numBarcosCreados;
+  }
+
+  public int getNumBarcosNavegando() {
+    return Embarcacion.numBarcosNavegando;
+  }
+
+  public float getTiempoTotalNavegacion() {
+    return Embarcacion.tiempoTotalFlota;
+  }
+  
+  //Métodos para modificar atributos de la clase
+  public void setRumbo(String rumbo) throws IllegalStateException {
+    if(!this.navegando) {
+      throw new IllegalStateException(String.format("La embarcación %s no está navegando, no se puede cambiar el rumbo.", 
+        this.nombreBarco));
+    } else if(rumbo.equalsIgnoreCase(this.rumbo)) {
+        throw new IllegalStateException(String.format("La embarcación %s ya está navegando con ese rumbo //(%s//), debes indicar un rumbo distinto para poder modificarlo.", 
+        this.nombreBarco, this.rumbo));
+    }
+  }
 }
