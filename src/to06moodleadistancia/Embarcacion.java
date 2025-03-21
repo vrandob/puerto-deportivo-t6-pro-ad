@@ -24,6 +24,7 @@ public abstract class Embarcacion implements Navegable { //Al ser abstracta no p
   protected String patron;
   protected String rumbo;
   protected int tiempoTotalNavegacionBarco;
+  protected int tripulantes;
   protected int velocidad;
 
   public Embarcacion(String nombre, int tripulantes) throws NullPointerException, IllegalArgumentException {
@@ -70,7 +71,7 @@ public abstract class Embarcacion implements Navegable { //Al ser abstracta no p
   }
 
   public int getTripulacion() {
-    return this.MAX_TRIPULANTES;
+    return this.tripulantes;
   }
 
   public int getTiempoTotalNavegacionBarco() {
@@ -89,15 +90,66 @@ public abstract class Embarcacion implements Navegable { //Al ser abstracta no p
   public float getTiempoTotalNavegacion() {
     return Embarcacion.tiempoTotalFlota;
   }
-  
+
   //Métodos para modificar atributos de la clase
   public void setRumbo(String rumbo) throws IllegalStateException {
-    if(!this.navegando) {
-      throw new IllegalStateException(String.format("La embarcación %s no está navegando, no se puede cambiar el rumbo.", 
+    if (!this.navegando) {
+      throw new IllegalStateException(String.format("La embarcación %s no está navegando, no se puede cambiar el rumbo.",
         this.nombreBarco));
-    } else if(rumbo.equalsIgnoreCase(this.rumbo)) {
-        throw new IllegalStateException(String.format("La embarcación %s ya está navegando con ese rumbo //(%s//), debes indicar un rumbo distinto para poder modificarlo.", 
+    } else if (rumbo.equalsIgnoreCase(this.rumbo)) {
+      throw new IllegalStateException(String.format("La embarcación %s ya está navegando con ese rumbo //(%s//), debes indicar un rumbo distinto para poder modificarlo.",
         this.nombreBarco, this.rumbo));
     }
   }
-}
+
+  // Métodos de acción relacionados con la interfaz "Navegable"
+  public void iniciarNavegacion(int velocidad, String rumbo, String patron, int numTripulantes) throws IllegalStateException, NullPointerException, IllegalArgumentException {
+    if (this.navegando) {
+      throw new IllegalStateException(String.format("La embarcación %s ya está navegando y se encuentra fuera de puerto",
+        this.nombreBarco));
+    } else if (rumbo == null) {
+      throw new NullPointerException("El rumbo no puede ser nulo, debes indicar el rumbo para iniciar la navegación");
+    } else if (rumbo.equals("")) {
+      throw new IllegalArgumentException("La embarcación no puede estar vacía, debes indicar el rumbo para iniciar la navegación.");
+    } else if (patron == null) {
+      throw new NullPointerException("El patrón de la embarcación no puede ser nulo, se necesita un patrón para iniciar la navegación.");
+    } else if (patron.equals("")) {
+      throw new IllegalArgumentException("El patrón de la embarcación no puede estar vacío, se necesita patrón para iniciar la navegación.");
+    } else if (numTripulantes < Embarcacion.MIN_TRIPULANTES || numTripulantes > this.MAX_TRIPULANTES) {
+      throw new IllegalArgumentException(String.format("El número de tripulantes debe estar entre %d y %d",
+        Embarcacion.MIN_TRIPULANTES, this.MAX_TRIPULANTES));
+    }
+
+    this.velocidad = velocidad;
+    this.rumbo = rumbo;
+    this.patron = patron;
+    this.tripulantes = numTripulantes;
+    this.navegando = true;
+    Embarcacion.numBarcosNavegando++;
+  } //navegable
+
+  public void pararNavegación(int minutosNavegando) throws IllegalStateException, IllegalArgumentException {
+    if (!this.navegando) {
+      throw new IllegalStateException(String.format("La embarcación %s no está navegando",
+        this.nombreBarco));
+    } else if (minutosNavegando < 0) {
+      throw new IllegalArgumentException("Tiempo navegando incorrecto, debe ser mayor que cero");
+    }
+    this.navegando = false;
+    this.tiempoTotalNavegacionBarco += minutosNavegando;
+    Embarcacion.tiempoTotalFlota += minutosNavegando;
+  }
+  
+  protected abstract void señalizar();  //Sin parámetros ni devuelve nada. Este método será sobreescrito en cada subclase.
+  
+  @Override
+  public String toString() {
+    return String.format("Nombre de la embarcación: %s, Tripulación: %d, Navegando: $s, Tiempo total de navegación del barco: %d horas", 
+      this.nombreBarco,
+      this.tripulantes,
+      (this.isNavegando() ? String.format("Sí, con el patrón %s en %s a %d nudos", this.getPatron(), this.getRumbo(), this.getVelocidad()) : "No"),
+      (float) this.getTiempoTotalNavegacionBarco() / 60.0
+      );
+  }
+
+} //class
