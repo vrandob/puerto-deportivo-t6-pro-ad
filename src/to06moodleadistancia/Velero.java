@@ -81,8 +81,8 @@ public final class Velero extends Embarcacion implements Regateable {
   @Override
   public void pararNavegacion(int minutosNavegando) {
     super.pararNavegación(minutosNavegando);
-    this.navegando = false;
-    this.velocidad = 0;
+    //this.navegando = false;
+    //this.velocidad = 0;
     //this.tiempoTotalNavegacionBarco += minutosNavegando;  Duplica tiempo total navegación
   }
 
