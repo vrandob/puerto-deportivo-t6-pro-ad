@@ -95,6 +95,9 @@ public final class Lancha extends Embarcacion { //No debe ser heredable pero sí
       throw new IllegalArgumentException(String.format("La velocidad de navegación de %d nudos asignada a %s es incorrecta.",
         velocidad, this.getNombreBarco()));
     }
+    this.navegando = true;
+    this.velocidad = velocidad;
+    Lancha.numBarcosNavegando++;
   }
 
   @Override
