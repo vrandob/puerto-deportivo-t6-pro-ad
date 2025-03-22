@@ -6,7 +6,7 @@ package to06moodleadistancia;
  */
 public interface Navegable {
   
-  void iniciarNavegacion();
+  void iniciarNavegacion(int velocidad, String rumbo, String patron, int tripulantes);
   
-  void pararNavegacion();
+  void pararNavegacion(int minutos);
 }
