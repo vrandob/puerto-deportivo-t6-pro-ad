@@ -78,16 +78,17 @@ public abstract class Embarcacion implements Navegable { //Al ser abstracta no p
     return this.tiempoTotalNavegacionBarco;
   }
 
-  //Métodos que devuelven información genérica o global sobre la clase (estáticos)
-  public int getNumBarcos() {
+  //Métodos que devuelven información genérica o global sobre la clase (estáticos) 
+  
+  public static int getNumBarcos() {
     return Embarcacion.numBarcosCreados;
   }
 
-  public int getNumBarcosNavegando() {
+  public static int getNumBarcosNavegando() {
     return Embarcacion.numBarcosNavegando;
   }
 
-  public float getTiempoTotalNavegacion() {
+  public static float getTiempoTotalNavegacion() {
     return Embarcacion.tiempoTotalFlota;
   }
 
@@ -151,5 +152,7 @@ public abstract class Embarcacion implements Navegable { //Al ser abstracta no p
       (float) this.getTiempoTotalNavegacionBarco() / 60.0
       );
   }
+  
+  
 
 } //class
