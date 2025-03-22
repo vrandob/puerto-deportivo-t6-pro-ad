@@ -137,6 +137,7 @@ public abstract class Embarcacion implements Navegable { //Al ser abstracta no p
       throw new IllegalArgumentException("Tiempo navegando incorrecto, debe ser mayor que cero");
     }
     this.navegando = false;
+    this.velocidad = 0;
     this.tiempoTotalNavegacionBarco += minutosNavegando;
     Embarcacion.tiempoTotalFlota += minutosNavegando;
   }
