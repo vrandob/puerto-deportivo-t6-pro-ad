@@ -36,7 +36,7 @@ public final class Velero extends Embarcacion implements Regateable {
       Velero.MIN_MASTILES,
       Embarcacion.MIN_TRIPULANTES);
     Velero.numVeleros++;
-    Velero.numBarcosCreados++;
+    //Velero.numBarcosCreados++;
   }
   // ------------------------------------------------------------------------
   // Getters (consultan el estado del objeto)
@@ -72,9 +72,9 @@ public final class Velero extends Embarcacion implements Regateable {
       throw new IllegalArgumentException(String.format("La velocidad de navegación de %d nudos es incorrecta.",
         velocidad));
     }
-    this.navegando = true;
-    this.velocidad = velocidad;
-    Velero.numBarcosNavegando++;
+    //this.navegando = true;
+    //this.velocidad = velocidad;
+    //Velero.numBarcosNavegando++;
   }
 
   //En el enunciado de esta clase no dice nada, pero se debe implementar el método pararNavegacion( de la interface Navegable
@@ -83,7 +83,7 @@ public final class Velero extends Embarcacion implements Regateable {
     super.pararNavegación(minutosNavegando);
     this.navegando = false;
     this.velocidad = 0;
-    this.tiempoTotalNavegacionBarco += minutosNavegando;
+    //this.tiempoTotalNavegacionBarco += minutosNavegando;  Duplica tiempo total navegación
   }
 
   @Override
