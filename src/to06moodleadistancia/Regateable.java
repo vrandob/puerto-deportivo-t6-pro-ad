@@ -6,5 +6,5 @@ package to06moodleadistancia;
  */
 interface Regateable {
   
-  void iniciarRegata();
+  String iniciarRegata(Velero otroBarco) throws NullPointerException, IllegalStateException;
 }
